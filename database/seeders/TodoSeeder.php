@@ -11,19 +11,14 @@ class TodoSeeder extends Seeder
 {
     public function run(): void
     {
-        // Create a demo user
         $user = User::create([
-            'name' => 'Demo User',
-            'email' => 'demo@example.com',
-            'password' => Hash::make('password123'),
+            'name' => 'gopi',
+            'email' => 'gopi1234@gmail.com',
+            'password' => Hash::make('123456'),
         ]);
-
-        // Create some todos for that user
         Todo::factory()->count(8)->create([
             'user_id' => $user->id,
         ]);
-
-        // Optionally create more random users + todos
         \App\Models\User::factory(3)->create()->each(function ($user) {
             Todo::factory()->count(4)->create(['user_id' => $user->id]);
         });

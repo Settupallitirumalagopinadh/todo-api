@@ -8,10 +8,8 @@ use App\Models\Todo;
 
 class TodoController extends Controller
 {
-    // GET /api/todos
     public function index(Request $request)
     {
-        // Optionally allow pagination/filtering via query params
         $query = $request->user()->todos()->orderBy('created_at', 'desc');
 
         if ($request->has('is_completed')) {
@@ -27,8 +25,6 @@ class TodoController extends Controller
 
         return response()->json($query->paginate($perPage));
     }
-
-    // POST /api/todos
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -44,19 +40,14 @@ class TodoController extends Controller
 
         return response()->json($todo, 201);
     }
-
-    // GET /api/todos/{todo}
     public function show(Todo $todo, Request $request)
     {
-        // Ensure the logged-in user owns the todo
         if ($todo->user_id !== $request->user()->id) {
             return response()->json(['message' => 'Not Found'], 404);
         }
 
         return response()->json($todo);
     }
-
-    // PUT/PATCH /api/todos/{todo}
     public function update(Request $request, Todo $todo)
     {
         if ($todo->user_id !== $request->user()->id) {
@@ -77,8 +68,6 @@ class TodoController extends Controller
 
         return response()->json($todo);
     }
-
-    // DELETE /api/todos/{todo}
     public function destroy(Request $request, Todo $todo)
     {
         if ($todo->user_id !== $request->user()->id) {

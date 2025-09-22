@@ -20,8 +20,6 @@ class Todo extends Model
     protected $casts = [
         'is_completed' => 'boolean',
     ];
-
-    // Relationship: a Todo belongs to a User
     public function user()
     {
         return $this->belongsTo(User::class);
